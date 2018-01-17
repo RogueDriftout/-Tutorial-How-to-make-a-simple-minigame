@@ -1,4 +1,4 @@
-///By Rogue 
+///By Rogue .
 #define FILTERSCRIT
 #include <a_samp>
 
