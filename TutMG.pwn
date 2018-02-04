@@ -158,3 +158,6 @@ public OnPlayerDisconnect(playerid,reason)// if a player disconnects in the even
         }
     return 1;
 }
+
+forward removepleasewait();
+public removepleasewait() return pleasewait = false;
