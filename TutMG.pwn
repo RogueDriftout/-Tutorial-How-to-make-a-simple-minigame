@@ -1,16 +1,18 @@
+//Mini-game tutorialby Rogue Dec 21st, 17
 #define FILTERSCRIT
 #include <a_samp>
-
+ 
 new bool:dmstarted,bool:pfrozen[MAX_PLAYERS],bool:pleasewait,bool:indm[MAX_PLAYERS];//Event variables Indicated By Names
 new playernumberdm,playerstimerdm[MAX_PLAYERS];//Event Variables Indicated by names
 new Float:X,Float:Y,Float:Z;//Event Entering Place
 new Float:x,Float:y,Float:z;//Event Place Inside for each player (make sure each is different.)
-
+ 
 #define EventCash 2500 // The cash fee to enter.
 #define DmWorld 6487 // The virtual world to separate the players from other players not playing the event.
 #define EventRange 5.0 // the range where the player enters from
 #define MAX_EVENT_PLAYERS 6 //the max amount of players in the event depends on the position cases at PlayerPos
 #define Delay_Time 50*1000 // 50 seconds to give players a chance to join
+ 
 public OnPlayerCommandText(playerid, cmdtext[])
 {
     if (strcmp("/dmevent", cmdtext, true, 10) == 0)
@@ -46,7 +48,10 @@ public OnPlayerCommandText(playerid, cmdtext[])
         }
     return 0;
 }
-
+ 
+forward removepleasewait();
+public removepleasewait() return pleasewait = false;
+ 
 forward PlayerPos(playerid);
 public PlayerPos(playerid)
 {
@@ -79,7 +84,7 @@ public PlayerPos(playerid)
     }
     return 1;
 }
-
+ 
 forward DelayDmEvent(playerid);
 public DelayDmEvent(playerid)//after 50 seconds had passed
 {
@@ -104,7 +109,7 @@ public DelayDmEvent(playerid)//after 50 seconds had passed
         }
     return 1;
 }
-
+ 
 forward DmCheck(playerid,vehicleid);
 public DmCheck(playerid,vehicleid)//The event checker to see who won this is set for each player entering separately.
 {
@@ -127,7 +132,7 @@ public DmCheck(playerid,vehicleid)//The event checker to see who won this is set
         }
     return 1;
 }
-
+ 
 public OnPlayerDeath(playerid,killerid,reason)//If a player dies in the event
 {
     if(indm[playerid] && !dmstarted && playernumberdm ==1)//If he's in the event and it hasn't started and there's only one player in there (him) then end the event.
@@ -147,7 +152,7 @@ public OnPlayerDeath(playerid,killerid,reason)//If a player dies in the event
         }
     return 1;
 }
-
+ 
 public OnPlayerDisconnect(playerid,reason)// if a player disconnects in the event.
 {
     if(indm[playerid])//if he's in the event kill his variables and decrease the allocated number of players inside.
@@ -158,6 +163,3 @@ public OnPlayerDisconnect(playerid,reason)// if a player disconnects in the even
         }
     return 1;
 }
-
-forward removepleasewait();
-public removepleasewait() return pleasewait = false;
